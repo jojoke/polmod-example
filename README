@@ -1,0 +1,19 @@
+This is an example SELinux policy module. The build system is intended to
+demonstrate:
+1) how to create a policy module
+2) how to build that module OUTSIDE of the refpolicy sources
+
+We make several assumptions:
+1) your system has SELinux policy headers installed
+2) your system has an SELinux config file in /etc/selinux
+
+BUILDING:
+This should be as simple as running:
+
+make prefix=/usr
+make install prefix=/usr
+make install-headers prefix=/usr
+
+Notice that the build assumes that prefix is '/usr/local' so most will need
+to supply make with the '/usr' prefix when running the build. The SELinux
+refpol build installs with a prefix of '/usr' by default.

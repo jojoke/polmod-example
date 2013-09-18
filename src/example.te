@@ -1,0 +1,19 @@
+
+policy_module(example, 0.1)
+
+########################################
+#
+# Declarations
+#
+
+type example_t;
+type example_exec_t;
+application_domain(example_t, example_exec_t)
+
+########################################
+#
+# example Local policy
+#
+
+example_exec(example_t)
+userdom_use_user_ptys(example_t)

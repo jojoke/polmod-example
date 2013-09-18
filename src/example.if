@@ -1,0 +1,64 @@
+## <summary>Example SELinux policy module.</summary>
+
+########################################
+## <summary>
+##	Execute example program in the example_t domain.
+## </summary>
+## <param name="domain">
+##	<summary>
+##	The type of the process performing this action.
+##	</summary>
+## </param>
+#
+interface(`example_domtrans',`
+	gen_require(`
+		type example_t, example_exec_t;
+	')
+
+	files_search_usr($1)
+	corecmd_search_bin($1)
+	domtrans_pattern($1, example_exec_t, example_t)
+')
+
+########################################
+## <summary>
+##	Execute example in the example_t domain.
+## </summary>
+## <param name="domain">
+##	<summary>
+##	The type of the process performing this action.
+##	</summary>
+## </param>
+## <param name="role">
+##	<summary>
+##	The role to allow the example_t domain.
+##	</summary>
+## </param>
+## <rolecap/>
+#
+interface(`example_run',`
+	gen_require(`
+		type example_t;
+	')
+
+	example_domtrans($1)
+	role $2 types example_t;
+')
+########################################
+## <summary>
+##      Execute example program in the callers domain.
+## </summary>
+## <param name="domain">
+##      <summary>
+##      The type of the process performing this action.
+##      </summary>
+## </param>
+interface(`example_exec',`
+        gen_require(`
+                type example_exec_t;
+        ')
+
+        files_search_usr($1)
+        corecmd_search_bin($1)
+        can_exec($1, example_exec_t)
+')
